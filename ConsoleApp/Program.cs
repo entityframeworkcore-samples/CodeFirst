@@ -14,15 +14,16 @@ namespace ConsoleApp.Jecaestevez
                 var Item = new Item()
                 {
                     Name = "Ron Palido",
-                    Description = "Drink"
+                    Description = "Drink",
+                    Expiration = DateTime.Now.AddYears(1)
 
                 };
-                Console.WriteLine($"Item NOT saved -> Id {Item.id} {Item.Name}");
+                Console.WriteLine($"Item NOT saved -> Id {Item.id} {Item.Name} {Item.Expiration}");
 
                 context.Add(Item);
                 context.SaveChanges();
 
-                Console.WriteLine($"Item saved -> Id {Item.id} {Item.Name}");
+                Console.WriteLine($"Item saved -> Id {Item.id} {Item.Name} {Item.Expiration}");
                 Console.ReadKey();
             }
 

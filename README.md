@@ -104,3 +104,60 @@ Using Package Manager Console select the DAL.JecaestevezApp.csproj and execute
         }
     }
 ```
+## 7 Modify the Item table adding new column / field
+Add a simple new field "Expiration" DateTime
+```
+    public class Item
+    {
+        public int id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public DateTime Expiration { get; set; }
+    }
+```
+## 8 Add new migration
+Open the Package Manager Console in Visual Studio, selecting the DAL.JecaestevezApp.csproj and execute 
+> PM > add-migration AddNewColumn
+
+It will be create a folder "Migrations" and the following files:
+* 20190328182329_AddNewColumn.cs
+* 20190328182329_AddNewColumn.Designer.cs
+
+It will automatially update
+* EfDbContextModelSnapshot.cs
+
+# 9 Update Database
+Execute the powershell script  "5.UpdateDatabase.ps1" which will execute the bellow command in "\DAL\DAL.Jecaestevez.csproj"
+> dotnet ef database update --startup-project ..\ConsoleApp
+
+Using Package Manager Console select the DAL.JecaestevezApp.csproj and execute 
+> PM> update-database –verbose
+
+# 10 Use the new field
+```
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Hello World!");
+
+            using (var context = new EfDbContext())
+            {
+                var Item = new Item()
+                {
+                    Name = "Ron Palido",
+                    Description = "Drink",
+                    Expiration = DateTime.Now.AddYears(1)
+
+                };
+                Console.WriteLine($"Item NOT saved -> Id {Item.id} {Item.Name} {Item.Expiration}");
+
+                context.Add(Item);
+                context.SaveChanges();
+
+                Console.WriteLine($"Item saved -> Id {Item.id} {Item.Name} {Item.Expiration}");
+                Console.ReadKey();
+            }
+        }
+    }
+```

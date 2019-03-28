@@ -34,3 +34,26 @@ You can also add manual the package opening  terminal and navigate to CodeFirst\
 > dotnet add .\DAL\DAL.JecaestevezApp.csproj package Microsoft.EntityFrameworkCore.Tools 
 
 > dotnet add .\DAL\DAL.JecaestevezApp.csproj package Microsoft.EntityFrameworkCore.Design 
+
+# 3 Add a simple class to be used in a new  DBContext
+Add a simple class "Item" like this:
+```
+    public class Item
+    {
+        public int id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+    }
+```
+Add DBContext
+```
+    public class EfDbContext : DbContext
+    {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            //TODO Extract connection string to a secret
+            optionsBuilder.UseSqlServer(@"Server=.\;Database=EFCodeFirstDB;Trusted_Connection=True;MultipleActiveResultSets=true");
+        }
+        public DbSet<Item> Items { get; set; }
+    }
+```

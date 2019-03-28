@@ -57,3 +57,15 @@ Add DBContext
         public DbSet<Item> Items { get; set; }
     }
 ```
+# 4 Create the first migration
+Open powershell console and execute the powershell script  "4.CrateMigration.ps1" which will execute the bellow command in "\DAL\DAL.Jecaestevez.csproj"
+> dotnet ef  migrations add CreateDatabase --startup-project ..\ConsoleApp
+
+It's possible do the same step using the Package Manager Console in Visual Studio, selecting the DAL.JecaestevezApp.csproj and execute 
+> PM > add-migration CreateDatabase
+
+It will be create a folder "Migrations" and the following files:
+* CreateDatabase.cs
+* CreateDatabase.Designer.cs
+* EfDbContextModelSnapshot.cs
+
